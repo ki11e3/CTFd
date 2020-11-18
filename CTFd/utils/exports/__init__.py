@@ -24,6 +24,7 @@ from CTFd.utils.exports.freeze import freeze_export
 from CTFd.utils.migrations import (
     create_database,
     drop_database,
+    truncate_database,
     get_current_revision,
     stamp_latest_revision,
 )
@@ -139,7 +140,10 @@ def import_ctf(backup, erase=True):
         db.engine.dispose()
 
         # Drop database and recreate it to get to a clean state
-        drop_database()
+        if drop_database():
+            create_database()
+        else:
+            truncate_database()
         create_database()
         # We explicitly do not want to upgrade or stamp here.
         # The import will have this information.

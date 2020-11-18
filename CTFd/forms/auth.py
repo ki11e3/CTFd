@@ -1,6 +1,6 @@
-from wtforms import PasswordField, StringField
+from wtforms import PasswordField, StringField , BooleanField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired , DataRequired
 
 from CTFd.forms import BaseForm
 from CTFd.forms.fields import SubmitField
@@ -12,6 +12,7 @@ def RegistrationForm(*args, **kwargs):
         name = StringField("User Name", validators=[InputRequired()])
         email = EmailField("Email", validators=[InputRequired()])
         password = PasswordField("Password", validators=[InputRequired()])
+        accept_tos = BooleanField('I accept the TOS', validators=[DataRequired()])
         submit = SubmitField("Submit")
 
         @property
